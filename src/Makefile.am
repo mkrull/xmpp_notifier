@@ -1,0 +1,2 @@
+bin_PROGRAMS=zabbix_notifier
+zabbix_notifier_SOURCES=zabbix_notifier.cpp
