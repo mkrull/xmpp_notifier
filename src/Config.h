@@ -14,24 +14,30 @@
 #include <map>
 #include <boost/variant.hpp>
 #include <stdexcept>
+#include <cstdlib>
 
 using namespace std;
-
 
 namespace ZabbixNotifier {
 
     typedef boost::variant<string, vector<string> > Option;
 
     class Config {
+        public:
+            static Config& Instance(string config_file);
+            static Config& Instance();
+
+            string get_value(string value);
+            vector<string> get_value_list(string value_list);
+
         private:
+            Config(string config_file);
+            static Config* MInstance;
+            static void Cleanup();
+
             bool load(string config_file);
             bool load_option(lua_State* L, string option);
             map<string, Option> values;
-        public:
-            Config(string config_file);
-            virtual ~Config();
-            string get_value(string value);
-            vector<string> get_value_list(string value_list);
     };
 
 }

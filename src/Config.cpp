@@ -11,6 +11,26 @@ using namespace std;
 
 namespace ZabbixNotifier {
 
+    Config* Config::MInstance = 0;
+
+    Config& Config::Instance(string config_file){
+        if (MInstance == 0) {
+            cout << "set instance" << endl;
+            MInstance = new Config(config_file);
+        }
+
+        return *MInstance;
+    }
+
+    Config& Config::Instance(){
+        return *MInstance;
+    }
+
+    void Config::Cleanup(){
+        delete MInstance;
+        MInstance = 0;
+    }
+
     bool Config::load_option(lua_State* L, string option) {
         lua_getglobal(L, option.c_str());
 
@@ -37,6 +57,7 @@ namespace ZabbixNotifier {
 
     bool Config::load(string config_file) {
 
+        // TODO ugly. use vector<string>
         string valid_options[7] = {
                 "user",
                 "group",
@@ -79,9 +100,7 @@ namespace ZabbixNotifier {
             throw runtime_error("Could not load config file.");
         }
 
+        atexit(&Cleanup);
     }
 
-    Config::~Config() {
-    }
-
-} /* namespace ZabbixNotifier */
+}
