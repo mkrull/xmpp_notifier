@@ -15,6 +15,9 @@
 #include <boost/variant.hpp>
 #include <stdexcept>
 #include <cstdlib>
+#include "Logger.h"
+
+#define LOGLEVEL "INFO"
 
 using namespace std;
 
@@ -37,7 +40,11 @@ namespace ZabbixNotifier {
 
             bool load(string config_file);
             bool load_option(lua_State* L, string option);
+
+            ZabbixNotifier::Logger logger;
             map<string, Option> values;
+            map<string, Option> defaults;
+            vector<string> get_valid_options();
     };
 
 }

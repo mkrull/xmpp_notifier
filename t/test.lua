@@ -1,12 +1,7 @@
 
-user = "zabbix_notifier"
-group = "zabbix_notifier"
-
-listen = "localhost:4242"
-
 xmpp_username = "zabbix"
 xmpp_password = "test123"
-xmpp_server   = "localhost"
+log_level = "debug"
 
 authorized_users = {
 	"user1",

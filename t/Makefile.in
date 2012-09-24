@@ -64,7 +64,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_tests_OBJECTS = tests.$(OBJEXT) Config.$(OBJEXT)
+am_tests_OBJECTS = tests.$(OBJEXT) Config.$(OBJEXT) Logger.$(OBJEXT)
 tests_OBJECTS = $(am_tests_OBJECTS)
 tests_DEPENDENCIES =
 DEFAULT_INCLUDES = -I.@am__isrc@
@@ -182,7 +182,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 tests_LDADD = -lgtest -llua -lboost_system
-tests_SOURCES = tests.cpp ../src/Config.cpp
+tests_SOURCES = tests.cpp ../src/Config.cpp ../src/Logger.cpp
 all: all-am
 
 .SUFFIXES:
@@ -268,6 +268,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Config.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Logger.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tests.Po@am__quote@
 
 .cpp.o:
@@ -297,6 +298,20 @@ Config.obj: ../src/Config.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/Config.cpp' object='Config.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Config.obj `if test -f '../src/Config.cpp'; then $(CYGPATH_W) '../src/Config.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/Config.cpp'; fi`
+
+Logger.o: ../src/Logger.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Logger.o -MD -MP -MF $(DEPDIR)/Logger.Tpo -c -o Logger.o `test -f '../src/Logger.cpp' || echo '$(srcdir)/'`../src/Logger.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Logger.Tpo $(DEPDIR)/Logger.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/Logger.cpp' object='Logger.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Logger.o `test -f '../src/Logger.cpp' || echo '$(srcdir)/'`../src/Logger.cpp
+
+Logger.obj: ../src/Logger.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Logger.obj -MD -MP -MF $(DEPDIR)/Logger.Tpo -c -o Logger.obj `if test -f '../src/Logger.cpp'; then $(CYGPATH_W) '../src/Logger.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/Logger.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Logger.Tpo $(DEPDIR)/Logger.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/Logger.cpp' object='Logger.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Logger.obj `if test -f '../src/Logger.cpp'; then $(CYGPATH_W) '../src/Logger.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/Logger.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
