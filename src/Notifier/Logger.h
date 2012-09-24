@@ -23,7 +23,7 @@
 
 using namespace std;
 
-namespace ZabbixNotifier {
+namespace Zabbix { namespace Notifier {
 
     class Logger {
         public:
@@ -49,6 +49,7 @@ namespace ZabbixNotifier {
             static Logger* MInstance;
     };
 
+}
 }
 
 #endif /* LOGGER_H_ */

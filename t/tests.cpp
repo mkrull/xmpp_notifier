@@ -5,14 +5,15 @@
  *      Author: mak
  */
 
-#include "../src/Config.h"
+#include "../src/Notifier/Config.h"
 #include <gtest/gtest.h>
 
 using namespace std;
+using namespace Zabbix::Notifier;
 
 TEST(Basic, ConfigFile){
 
-        ZabbixNotifier::Config config = ZabbixNotifier::Config::Instance("t/test.lua");
+        Config config = Config::Instance("t/test.lua");
 
         string user = config.get_value("user");
         EXPECT_STREQ("zabbix_notifier", user.c_str());
@@ -44,7 +45,7 @@ TEST(Basic, ConfigFile){
 
 TEST(Basic, SingletonConfig){
 
-        ZabbixNotifier::Config config = ZabbixNotifier::Config::Instance();
+        Config config = Config::Instance();
 
         string user = config.get_value("user");
         EXPECT_STREQ("zabbix_notifier", user.c_str());

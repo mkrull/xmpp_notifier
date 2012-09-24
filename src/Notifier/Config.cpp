@@ -9,7 +9,7 @@
 
 using namespace std;
 
-namespace ZabbixNotifier {
+namespace Zabbix { namespace Notifier {
 
     Config* Config::MInstance = 0;
 
@@ -131,7 +131,7 @@ namespace ZabbixNotifier {
     }
 
     Config::Config(string config_file) {
-        Config::logger = ZabbixNotifier::Logger::Instance();
+        Config::logger = Notifier::Logger::Instance();
         Config::logger.set_level(LOGLEVEL);
 
         Config::defaults["user"] = "zabbix_notifier";
@@ -146,4 +146,5 @@ namespace ZabbixNotifier {
 
         atexit(&Cleanup);
     }
+}
 }

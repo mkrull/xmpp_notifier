@@ -10,7 +10,7 @@
 
 using namespace std;
 
-namespace ZabbixNotifier {
+namespace Zabbix { namespace Notifier {
 
     Logger* Logger::MInstance = 0;
     int Logger::level = INFO;
@@ -125,4 +125,5 @@ namespace ZabbixNotifier {
 
         atexit(&Cleanup);
     }
+}
 }

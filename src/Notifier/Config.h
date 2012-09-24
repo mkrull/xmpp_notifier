@@ -21,7 +21,7 @@
 
 using namespace std;
 
-namespace ZabbixNotifier {
+namespace Zabbix { namespace Notifier {
 
     typedef boost::variant<string, vector<string> > Option;
 
@@ -41,12 +41,13 @@ namespace ZabbixNotifier {
             bool load(string config_file);
             bool load_option(lua_State* L, string option);
 
-            ZabbixNotifier::Logger logger;
+            Notifier::Logger logger;
             map<string, Option> values;
             map<string, Option> defaults;
             vector<string> get_valid_options();
     };
 
+}
 }
 
 #endif /* CONFIG_H_ */
