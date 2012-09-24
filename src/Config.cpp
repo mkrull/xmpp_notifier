@@ -37,28 +37,38 @@ namespace ZabbixNotifier {
         // laod value
         lua_getglobal(L, option.c_str());
 
+        // check if stack element is convertable into string
         if (lua_isstring(L, 1)) {
             logger.debug(option + " is a string value");
+
             string value = lua_tostring(L, 1);
-            values[option] = value;
+            Config::values[option] = value;
+
             logger.debug("got value " + value + " for " + option);
         }
         else {
+            // check if stack value is table
             if (lua_istable(L, 1)) {
                 logger.debug(option + " is a table");
+
                 vector<string> vector;
 
                 int table_length = lua_objlen(L,1);
+
+                // read table into vector
+                // TODO check if rows are strings
                 for (int i = 1; i <= table_length; i++) {
                     lua_pushinteger(L, i);
-                    lua_gettable(L,1);
+                    lua_gettable(L, 1);
                     string table_row = lua_tostring(L, -1);
+
                     logger.debug("Loading table row value " + table_row + " into " + option);
+
                     vector.push_back(table_row);
                     lua_pop(L, 1);
                 }
 
-                values[option] = vector;
+                Config::values[option] = vector;
             }
             else if (lua_isnil(L, 1)){
                 if (defaults.find(option) == defaults.end()){
@@ -72,7 +82,7 @@ namespace ZabbixNotifier {
             }
         }
 
-        // pop value
+        // pop last value to keep stack in clean state
         lua_pop(L, 1);
         return retval;
     }
@@ -83,11 +93,7 @@ namespace ZabbixNotifier {
 
         lua_State* L = luaL_newstate();
 
-        if (luaL_loadfile(L, config_file.c_str())) {
-            return false;
-        }
-
-        if (lua_pcall(L, 0, 0, 0)) {
+        if (luaL_dofile(L, config_file.c_str())) {
             return false;
         }
 
