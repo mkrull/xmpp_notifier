@@ -5,7 +5,7 @@
  *      Author: mak
  */
 
-#include "../src/Notifier/Config.h"
+#include "../src/Zabbix/Notifier/Config.h"
 #include <gtest/gtest.h>
 
 using namespace std;
