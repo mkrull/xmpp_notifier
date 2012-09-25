@@ -115,6 +115,7 @@ namespace Zabbix { namespace Notifier {
         options.push_back("listen");
         options.push_back("xmpp_username");
         options.push_back("xmpp_password");
+        options.push_back("xmpp_resource");
         options.push_back("log_level");
         options.push_back("authorized_users");
         options.push_back("xmpp_server");
@@ -139,6 +140,7 @@ namespace Zabbix { namespace Notifier {
         Config::defaults["listen"] = "localhost:4242";
         Config::defaults["log_level"] = "info";
         Config::defaults["xmpp_server"] = "localhost";
+        Config::defaults["xmpp_resource"] = "bot_at_work";
 
         if (Config::load(config_file) == false) {
             throw runtime_error("Could not load config file.");

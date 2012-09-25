@@ -36,6 +36,9 @@ TEST(Basic, ConfigFile){
         string xmpp_server = config.get_value("xmpp_server");
         EXPECT_STREQ("localhost", xmpp_server.c_str());
 
+        string xmpp_resource = config.get_value("xmpp_resource");
+        EXPECT_STREQ("bot_at_work", xmpp_resource.c_str());
+
         vector<string> authorized_users = config.get_value_list("authorized_users");
         EXPECT_STREQ("user1", (authorized_users[0]).c_str());
         EXPECT_STREQ("user2", (authorized_users[1]).c_str());
@@ -67,6 +70,9 @@ TEST(Basic, SingletonConfig){
 
         string xmpp_server = config.get_value("xmpp_server");
         EXPECT_STREQ("localhost", xmpp_server.c_str());
+
+        string xmpp_resource = config.get_value("xmpp_resource");
+        EXPECT_STREQ("bot_at_work", xmpp_resource.c_str());
 
         vector<string> authorized_users = config.get_value_list("authorized_users");
         EXPECT_STREQ("user1", (authorized_users[0]).c_str());
