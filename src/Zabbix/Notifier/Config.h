@@ -13,6 +13,7 @@
 #include <lua.hpp>
 #include <map>
 #include <boost/variant.hpp>
+#include <boost/shared_ptr.hpp>
 #include <stdexcept>
 #include <cstdlib>
 #include "Logger.h"
@@ -27,23 +28,21 @@ namespace Zabbix { namespace Notifier {
 
     class Config {
         public:
-            static Config& Instance(string config_file);
-            static Config& Instance();
-
+            Config(string config_file);
+            Config(string config_file, boost::shared_ptr<Logger> logger);
+            ~Config();
             string get_value(string value);
             vector<string> get_value_list(string value_list);
 
         private:
-            Config(string config_file);
-            static Config* MInstance;
-            static void Cleanup();
-
             bool load(string config_file);
             bool load_option(lua_State* L, string option);
 
-            Notifier::Logger logger;
+            boost::shared_ptr<Logger> logger;
             map<string, Option> values;
             map<string, Option> defaults;
+            void init();
+            void init_logger();
             vector<string> get_valid_options();
     };
 

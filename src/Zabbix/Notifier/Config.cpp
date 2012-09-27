@@ -11,45 +11,26 @@ using namespace std;
 
 namespace Zabbix { namespace Notifier {
 
-    Config* Config::MInstance = 0;
-
-    Config& Config::Instance(string config_file) {
-        if (MInstance == 0) {
-            MInstance = new Config(config_file);
-        }
-
-        return *MInstance;
-    }
-
-    Config& Config::Instance() {
-        return *MInstance;
-    }
-
-    void Config::Cleanup() {
-        delete MInstance;
-        MInstance = 0;
-    }
-
     bool Config::load_option(lua_State* L, string option) {
         bool retval = true;
-        logger.debug("Loading config value " + option);
+        logger->debug("Loading config value " + option);
 
         // laod value
         lua_getglobal(L, option.c_str());
 
         // check if stack element is convertable into string
         if (lua_isstring(L, 1)) {
-            logger.debug(option + " is a string value");
+            logger->debug(option + " is a string value");
 
             string value = lua_tostring(L, 1);
             Config::values[option] = value;
 
-            logger.debug("got value " + value + " for " + option);
+            logger->debug("got value " + value + " for " + option);
         }
         else {
             // check if stack value is table
             if (lua_istable(L, 1)) {
-                logger.debug(option + " is a table");
+                logger->debug(option + " is a table");
 
                 vector<string> vector;
 
@@ -62,7 +43,7 @@ namespace Zabbix { namespace Notifier {
                     lua_gettable(L, 1);
                     string table_row = lua_tostring(L, -1);
 
-                    logger.debug("Loading table row value " + table_row + " into " + option);
+                    logger->debug("Loading table row value " + table_row + " into " + option);
 
                     vector.push_back(table_row);
                     lua_pop(L, 1);
@@ -72,12 +53,12 @@ namespace Zabbix { namespace Notifier {
             }
             else if (lua_isnil(L, 1)){
                 if (defaults.find(option) == defaults.end()){
-                    logger.crit(option + " must be defined");
+                    logger->crit(option + " must be defined");
                     retval = false;
                 }
                 else {
                     values[option] = defaults[option];
-                    logger.warn(option + " not defined in config file, using default: " + get_value(option));
+                    logger->warn(option + " not defined in config file, using default: " + get_value(option));
                 }
             }
         }
@@ -112,7 +93,7 @@ namespace Zabbix { namespace Notifier {
         vector<string> options;
         options.push_back("user");
         options.push_back("group");
-        options.push_back("listen");
+        options.push_back("zabbix_api_server");
         options.push_back("xmpp_username");
         options.push_back("xmpp_password");
         options.push_back("xmpp_resource");
@@ -131,22 +112,43 @@ namespace Zabbix { namespace Notifier {
         return boost::get<vector<string> >(values[value]);
     }
 
-    Config::Config(string config_file) {
-        Config::logger = Notifier::Logger::Instance();
-        Config::logger.set_level(LOGLEVEL);
+    void Config::init_logger(){
+        boost::shared_ptr<Logger> logger( new Zabbix::Notifier::Logger());
 
+        Config::logger = logger;
+    }
+
+    void Config::init(){
         Config::defaults["user"] = "zabbix_notifier";
         Config::defaults["group"] = "zabbix_notifier";
-        Config::defaults["listen"] = "localhost:4242";
-        Config::defaults["log_level"] = "info";
-        Config::defaults["xmpp_server"] = "localhost";
+        Config::defaults["zabbix_api_server"] = "localhost:80";
+        Config::defaults["log_level"] = "INFO";
+        Config::defaults["xmpp_server"] = "localhost:5223";
         Config::defaults["xmpp_resource"] = "bot_at_work";
+    }
 
-        if (Config::load(config_file) == false) {
+    Config::Config(string config_file, boost::shared_ptr<Logger> logger){
+        Config::logger = logger;
+        Config::logger->set_level(LOGLEVEL);
+
+        init();
+
+        if (Config::load(config_file) == false)
             throw runtime_error("Could not load config file.");
-        }
 
-        atexit(&Cleanup);
+    }
+
+    Config::Config(string config_file){
+
+        Config::init();
+        Config::init_logger();
+        Config::logger->set_level(LOGLEVEL);
+
+        if (Config::load(config_file) == false)
+            throw runtime_error("Could not load config file.");
+    }
+
+    Config::~Config(){
     }
 }
 }

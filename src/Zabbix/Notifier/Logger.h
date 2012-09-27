@@ -27,8 +27,8 @@ namespace Zabbix { namespace Notifier {
 
     class Logger {
         public:
-            static Logger& Instance();
             Logger();
+            ~Logger();
 
             void emerg(string line);
             void alert(string line);
@@ -43,10 +43,8 @@ namespace Zabbix { namespace Notifier {
             bool set_level(string level);
         private:
             void init();
-            static void Cleanup();
 
-            static int level;
-            static Logger* MInstance;
+            int level;
     };
 
 }

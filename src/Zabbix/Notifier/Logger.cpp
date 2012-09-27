@@ -12,17 +12,6 @@ using namespace std;
 
 namespace Zabbix { namespace Notifier {
 
-    Logger* Logger::MInstance = 0;
-    int Logger::level = INFO;
-
-    Logger& Logger::Instance(){
-        if (MInstance == 0){
-            MInstance = new Logger();
-        }
-
-        return *MInstance;
-    }
-
     void Logger::init(){
         openlog("zabbix-notifier", LOG_PID | LOG_CONS | LOG_NDELAY, LOG_USER);
     }
@@ -42,12 +31,6 @@ namespace Zabbix { namespace Notifier {
         Logger::level = level_map[level];
 
         return true;
-    }
-
-    void Logger::Cleanup(){
-        closelog();
-        delete MInstance;
-        MInstance = 0;
     }
 
     void Logger::emerg(string line){
@@ -122,8 +105,10 @@ namespace Zabbix { namespace Notifier {
 
     Logger::Logger() {
         init();
+    }
 
-        atexit(&Cleanup);
+    Logger::~Logger(){
+
     }
 }
 }
