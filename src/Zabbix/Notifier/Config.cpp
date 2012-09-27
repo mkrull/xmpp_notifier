@@ -94,12 +94,14 @@ namespace Zabbix { namespace Notifier {
         options.push_back("user");
         options.push_back("group");
         options.push_back("zabbix_api_server");
+        options.push_back("zabbix_api_server_port");
         options.push_back("xmpp_username");
         options.push_back("xmpp_password");
         options.push_back("xmpp_resource");
         options.push_back("log_level");
         options.push_back("authorized_users");
         options.push_back("xmpp_server");
+        options.push_back("xmpp_server_port");
 
         return options;
     }
@@ -121,9 +123,11 @@ namespace Zabbix { namespace Notifier {
     void Config::init(){
         Config::defaults["user"] = "zabbix_notifier";
         Config::defaults["group"] = "zabbix_notifier";
-        Config::defaults["zabbix_api_server"] = "localhost:80";
+        Config::defaults["zabbix_api_server"] = "localhost";
+        Config::defaults["zabbix_api_server_port"] = "80";
         Config::defaults["log_level"] = "INFO";
-        Config::defaults["xmpp_server"] = "localhost:5223";
+        Config::defaults["xmpp_server"] = "localhost";
+        Config::defaults["xmpp_server_port"] = "5223";
         Config::defaults["xmpp_resource"] = "bot_at_work";
     }
 

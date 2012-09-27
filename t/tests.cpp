@@ -23,7 +23,10 @@ TEST(Basic, ConfigFile){
         EXPECT_STREQ("zabbix_notifier", group.c_str());
 
         string zabbix_api_server = config->get_value("zabbix_api_server");
-        EXPECT_STREQ("localhost:80", zabbix_api_server.c_str());
+        EXPECT_STREQ("localhost", zabbix_api_server.c_str());
+
+        string zabbix_api_server_port = config->get_value("zabbix_api_server_port");
+        EXPECT_STREQ("80", zabbix_api_server_port.c_str());
 
         string log_level = config->get_value("log_level");
         EXPECT_STREQ("DEBUG", log_level.c_str());
@@ -35,7 +38,10 @@ TEST(Basic, ConfigFile){
         EXPECT_STREQ("test123", xmpp_password.c_str());
 
         string xmpp_server = config->get_value("xmpp_server");
-        EXPECT_STREQ("localhost:5223", xmpp_server.c_str());
+        EXPECT_STREQ("localhost", xmpp_server.c_str());
+
+        string xmpp_server_port = config->get_value("xmpp_server_port");
+        EXPECT_STREQ("5223", xmpp_server_port.c_str());
 
         string xmpp_resource = config->get_value("xmpp_resource");
         EXPECT_STREQ("bot_at_work", xmpp_resource.c_str());
@@ -58,7 +64,10 @@ TEST(Basic, Shared){
         EXPECT_STREQ("zabbix_notifier", group.c_str());
 
         string zabbix_api_server = config->get_value("zabbix_api_server");
-        EXPECT_STREQ("localhost:80", zabbix_api_server.c_str());
+        EXPECT_STREQ("localhost", zabbix_api_server.c_str());
+
+        string zabbix_api_server_port = config->get_value("zabbix_api_server_port");
+        EXPECT_STREQ("80", zabbix_api_server_port.c_str());
 
         string log_level = config->get_value("log_level");
         EXPECT_STREQ("DEBUG", log_level.c_str());
@@ -70,7 +79,10 @@ TEST(Basic, Shared){
         EXPECT_STREQ("test123", xmpp_password.c_str());
 
         string xmpp_server = config->get_value("xmpp_server");
-        EXPECT_STREQ("localhost:5223", xmpp_server.c_str());
+        EXPECT_STREQ("localhost", xmpp_server.c_str());
+
+        string xmpp_server_port = config->get_value("xmpp_server_port");
+        EXPECT_STREQ("5223", xmpp_server_port.c_str());
 
         string xmpp_resource = config->get_value("xmpp_resource");
         EXPECT_STREQ("bot_at_work", xmpp_resource.c_str());
@@ -94,7 +106,10 @@ TEST(Basic, ExternalLogger){
         EXPECT_STREQ("zabbix_notifier", group.c_str());
 
         string zabbix_api_server = config->get_value("zabbix_api_server");
-        EXPECT_STREQ("localhost:80", zabbix_api_server.c_str());
+        EXPECT_STREQ("localhost", zabbix_api_server.c_str());
+
+        string zabbix_api_server_port = config->get_value("zabbix_api_server_port");
+        EXPECT_STREQ("80", zabbix_api_server_port.c_str());
 
         string log_level = config->get_value("log_level");
         EXPECT_STREQ("DEBUG", log_level.c_str());
@@ -106,7 +121,10 @@ TEST(Basic, ExternalLogger){
         EXPECT_STREQ("test123", xmpp_password.c_str());
 
         string xmpp_server = config->get_value("xmpp_server");
-        EXPECT_STREQ("localhost:5223", xmpp_server.c_str());
+        EXPECT_STREQ("localhost", xmpp_server.c_str());
+
+        string xmpp_server_port = config->get_value("xmpp_server_port");
+        EXPECT_STREQ("5223", xmpp_server_port.c_str());
 
         string xmpp_resource = config->get_value("xmpp_resource");
         EXPECT_STREQ("bot_at_work", xmpp_resource.c_str());
