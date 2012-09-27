@@ -16,30 +16,34 @@
 #include <boost/lexical_cast.hpp>
 #include <iostream>
 #include <gloox/client.h>
+#include <gloox/connectionlistener.h>
 #include <gloox/messagehandler.h>
+#include <gloox/message.h>
+#include "Config.h"
+#include "Logger.h"
 
 using namespace std;
 using namespace boost;
 
 namespace Zabbix { namespace Notifier {
 
-    typedef shared_ptr< asio::io_service > io_svc;
-    typedef shared_ptr< asio::io_service::work > io_svc_work;
-    typedef shared_ptr< asio::io_service::strand > io_svc_strand;
+    typedef boost::shared_ptr< asio::io_service > io_svc;
+    typedef boost::shared_ptr< asio::io_service::work > io_svc_work;
+    typedef boost::shared_ptr< asio::io_service::strand > io_svc_strand;
 
     class XMPPClient : public gloox::MessageHandler, gloox::ConnectionListener {
         public:
-            XMPPClient(shared_ptr<Config> config, shared_ptr<Logger> logger);
+            XMPPClient(boost::shared_ptr<Config> config, boost::shared_ptr<Logger> logger);
             virtual ~XMPPClient();
-            void run(io_svc io_service);
+            void run();
         private:
-            shared_ptr<Config> config;
-            shared_ptr<Logger> logger;
-            void worker(io_svc io_service);
+            boost::shared_ptr<Config> config;
+            boost::shared_ptr<Logger> logger;
+            void worker();
             gloox::Client* client;
             virtual void handleMessage(const gloox::Message& stanza, gloox::MessageSession* session = 0);
             virtual void onConnect();
-            virtual void onTLSConnect( gloox::CertInfo& info );
+            virtual bool onTLSConnect( const gloox::CertInfo& info );
             virtual void onDisconnect( gloox::ConnectionError e );
     };
 

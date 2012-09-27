@@ -13,30 +13,32 @@ using namespace Zabbix::Notifier;
 
 namespace Zabbix { namespace Notifier {
 
-    virtual void handleMessage(const gloox::Message& stanza, gloox::MessageSession* session = 0){
-        gloox::Message msg( stanza.m_from(), "hello from zabbix notifier");
+    bool XMPPClient::onTLSConnect( const gloox::CertInfo& info ){
+        // accept all certificates unchecked
+        return true;
+    }
+
+    void XMPPClient::handleMessage(const gloox::Message& stanza, gloox::MessageSession* session){
+        gloox::Message::MessageType type = gloox::Message::MessageType::Chat;
+        gloox::Message msg( type , stanza.from(), "hello from zabbix notifier");
+
         XMPPClient::client->send(msg);
     }
 
-    void XMPPClient::run(io_svc io_service){
-        thread_group workers;
-        workers.create_thread(bind(&worker, io_service));
+    void XMPPClient::run(){
+
     }
 
-    void XMPPClient::worker(io_svc io_service){
+    void XMPPClient::onDisconnect( gloox::ConnectionError e ){
+
+    }
+
+    void XMPPClient::onConnect(){
+
+    }
+
+    void XMPPClient::worker(){
         logger->debug("started worker");
-
-        try {
-            system::error_code e;
-            io_service->run(e);
-
-            if (e){
-                logger->err(e.message());
-            }
-        }
-        catch (std::exception& ec){
-            logger->err(ec.what());
-        }
 
         string jabber_id = XMPPClient::config->get_value("xmpp_username")
                 + "@"
@@ -50,10 +52,7 @@ namespace Zabbix { namespace Notifier {
         XMPPClient::client->connect();
     }
 
-    XMPPClient::XMPPClient(shared_ptr<Config> config, shared_ptr<Logger> logger) {
-        io_svc io_service( new asio::io_service );
-        io_svc_work work( new asio::io_service::work( *io_service) );
-        io_svc_strand strand( new asio::io_service::strand( *io_service ) );
+    XMPPClient::XMPPClient(boost::shared_ptr<Config> config, boost::shared_ptr<Logger> logger) {
 
         XMPPClient::config = config;
         XMPPClient::logger = logger;

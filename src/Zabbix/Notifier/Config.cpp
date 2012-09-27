@@ -90,18 +90,14 @@ namespace Zabbix { namespace Notifier {
     }
 
     vector<string> Config::get_valid_options(){
-        vector<string> options;
-        options.push_back("user");
-        options.push_back("group");
-        options.push_back("zabbix_api_server");
-        options.push_back("zabbix_api_server_port");
-        options.push_back("xmpp_username");
-        options.push_back("xmpp_password");
-        options.push_back("xmpp_resource");
-        options.push_back("log_level");
-        options.push_back("authorized_users");
-        options.push_back("xmpp_server");
-        options.push_back("xmpp_server_port");
+        vector<string> options = {
+                "user"             , "group"                 ,
+                "zabbix_api_server", "zabbix_api_server_port",
+                "xmpp_username"    , "xmpp_password"         , "xmpp_resource",
+                "log_level"        ,
+                "authorized_users" ,
+                "xmpp_server"      , "xmpp_server_port"
+        };
 
         return options;
     }
@@ -121,17 +117,19 @@ namespace Zabbix { namespace Notifier {
     }
 
     void Config::init(){
-        Config::defaults["user"] = "zabbix_notifier";
-        Config::defaults["group"] = "zabbix_notifier";
-        Config::defaults["zabbix_api_server"] = "localhost";
-        Config::defaults["zabbix_api_server_port"] = "80";
-        Config::defaults["log_level"] = "INFO";
-        Config::defaults["xmpp_server"] = "localhost";
-        Config::defaults["xmpp_server_port"] = "5223";
-        Config::defaults["xmpp_resource"] = "bot_at_work";
+        Config::defaults = {
+            {"user"                  , "zabbix_notifier"},
+            {"group"                 , "zabbix_notifier"},
+            {"zabbix_api_server"     , "localhost"      },
+            {"zabbix_api_server_port", "80"             },
+            {"log_level"             , "INFO"           },
+            {"xmpp_server"           , "localhost"      },
+            {"xmpp_server_port"      , "5223"           },
+            {"xmpp_resource"         , "bot_at_work"    }
+        };
     }
 
-    Config::Config(string config_file, boost::shared_ptr<Logger> logger){
+    Config::Config(boost::shared_ptr<Logger> logger, string config_file){
         Config::logger = logger;
         Config::logger->set_level(LOGLEVEL);
 

@@ -10,9 +10,18 @@
 
 #include <iostream>
 
+
+#include "Zabbix/Notifier/Config.h"
+#include "Zabbix/Notifier/Logger.h"
+#include "Zabbix/Notifier/XMPPClient.h"
+
 using namespace std;
+using namespace Zabbix::Notifier;
+using namespace boost;
+
 
 int main(void) {
-	cout << "Hello Boost" << endl; /* prints Hello Boost */
-	return 0;
+    boost::shared_ptr<Config> config(new Config("/home/mak/test.lua"));
+    boost::shared_ptr<Logger> logger(new Logger());
+	XMPPClient* client = new XMPPClient(config, logger);
 }

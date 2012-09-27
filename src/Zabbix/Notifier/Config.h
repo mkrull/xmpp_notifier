@@ -29,7 +29,7 @@ namespace Zabbix { namespace Notifier {
     class Config {
         public:
             Config(string config_file);
-            Config(string config_file, boost::shared_ptr<Logger> logger);
+            Config(boost::shared_ptr<Logger> logger, string config_file);
             ~Config();
             string get_value(string value);
             vector<string> get_value_list(string value_list);

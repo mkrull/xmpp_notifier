@@ -17,16 +17,16 @@ namespace Zabbix { namespace Notifier {
     }
 
     bool Logger::set_level(string level){
-        map<string, int> level_map;
-
-        level_map["EMERG"]   = EMERG;
-        level_map["ALERT"]   = ALERT;
-        level_map["CRIT"]    = CRIT;
-        level_map["ERR"]     = ERR;
-        level_map["WARNING"] = WARNING;
-        level_map["NOTICE"]  = NOTICE;
-        level_map["INFO"]    = INFO;
-        level_map["DEBUG"]   = DEBUG;
+        map<string, int> level_map({
+            {"EMERG"  , EMERG  },
+            {"ALERT"  , ALERT  },
+            {"CRIT"   , CRIT   },
+            {"ERR"    , ERR    },
+            {"WARNING", WARNING},
+            {"NOTICE" , NOTICE },
+            {"INFO"   , INFO   },
+            {"DEBUG"  , DEBUG  }
+        });
 
         Logger::level = level_map[level];
 

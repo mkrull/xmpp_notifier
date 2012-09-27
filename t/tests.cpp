@@ -97,7 +97,7 @@ TEST(Basic, Shared){
 TEST(Basic, ExternalLogger){
 
         boost::shared_ptr<Logger> logger( new Logger() );
-        boost::shared_ptr<Config> config( new Config("t/test.lua", logger) );
+        boost::shared_ptr<Config> config( new Config(logger, "t/test.lua") );
 
         string user = config->get_value("user");
         EXPECT_STREQ("zabbix_notifier", user.c_str());
