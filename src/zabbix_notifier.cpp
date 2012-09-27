@@ -24,4 +24,5 @@ int main(void) {
     boost::shared_ptr<Config> config(new Config("/home/mak/test.lua"));
     boost::shared_ptr<Logger> logger(new Logger());
 	XMPPClient* client = new XMPPClient(config, logger);
+	client->run();
 }

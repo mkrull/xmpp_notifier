@@ -26,7 +26,7 @@ namespace Zabbix { namespace Notifier {
     }
 
     void XMPPClient::run(){
-
+        this->worker();
     }
 
     void XMPPClient::onDisconnect( gloox::ConnectionError e ){
