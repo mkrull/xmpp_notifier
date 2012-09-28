@@ -96,7 +96,8 @@ namespace Zabbix { namespace Notifier {
                 "xmpp_username"    , "xmpp_password"         , "xmpp_resource",
                 "log_level"        ,
                 "authorized_users" , "notify_users"          ,
-                "xmpp_server"      , "xmpp_server_port"
+                "xmpp_server"      , "xmpp_server_port"      ,
+                "script_dir"
         };
 
         return options;
@@ -127,6 +128,7 @@ namespace Zabbix { namespace Notifier {
             {"xmpp_server_port"      , "5223"           },
             {"xmpp_resource"         , "bot_at_work"    },
             {"notify_users"          , vector<string>() },
+            {"script_dir"            , "scripts"        },
         };
     }
 

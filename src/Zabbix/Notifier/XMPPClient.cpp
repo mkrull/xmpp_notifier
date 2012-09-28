@@ -6,6 +6,7 @@
  */
 
 #include "XMPPClient.h"
+#include "Action.h"
 
 using namespace std;
 using namespace boost;
@@ -58,7 +59,8 @@ namespace Zabbix { namespace Notifier {
                     logger->debug("Notifying jid: " + *it);
                     gloox::Message::MessageType type = gloox::Message::MessageType::Chat;
                     gloox::JID jid(*it);
-                    gloox::Message msg( type , jid, "hello from zabbix notifier");
+                    Action action;
+                    gloox::Message msg( type , jid, action(XMPPClient::config->get_value("script_dir"), "test"));
 
                     XMPPClient::client->send(msg);
                 }
