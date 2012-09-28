@@ -45,6 +45,7 @@ namespace Zabbix { namespace Notifier {
             virtual void onConnect();
             virtual bool onTLSConnect( const gloox::CertInfo& info );
             virtual void onDisconnect( gloox::ConnectionError e );
+            bool check_authorized(string username);
     };
 
 }

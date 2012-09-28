@@ -95,7 +95,7 @@ namespace Zabbix { namespace Notifier {
                 "zabbix_api_server", "zabbix_api_server_port",
                 "xmpp_username"    , "xmpp_password"         , "xmpp_resource",
                 "log_level"        ,
-                "authorized_users" ,
+                "authorized_users" , "notify_users"          ,
                 "xmpp_server"      , "xmpp_server_port"
         };
 
@@ -125,7 +125,8 @@ namespace Zabbix { namespace Notifier {
             {"log_level"             , "INFO"           },
             {"xmpp_server"           , "localhost"      },
             {"xmpp_server_port"      , "5223"           },
-            {"xmpp_resource"         , "bot_at_work"    }
+            {"xmpp_resource"         , "bot_at_work"    },
+            {"notify_users"          , vector<string>() },
         };
     }
 
