@@ -17,7 +17,7 @@ namespace Zabbix { namespace Notifier {
     // needed virtual methods
     //
     void XMPPClient::onConnect(){
-
+        logger->info("Connecting");
     }
 
     bool XMPPClient::onTLSConnect( const gloox::CertInfo& info ){
@@ -31,8 +31,12 @@ namespace Zabbix { namespace Notifier {
 
     void XMPPClient::onDisconnect( gloox::ConnectionError e ){
         if (e != gloox::ConnectionError::ConnNoError){
-            // handle
+
+            // TODO handle error and reconnect by error type
             logger->err("Disconnected with error");
+
+            // reconnect
+            XMPPClient::connect();
         }
         else {
             logger->notice("Disconnected");
@@ -93,17 +97,15 @@ namespace Zabbix { namespace Notifier {
     //
     // run parts
     //
-    void XMPPClient::run(){
-        thread_group xmpp_threads;
+    void XMPPClient::worker(){
+        logger->debug("started worker");
 
-        thread t(bind(&XMPPClient::worker, this));
-        t.join();
+        XMPPClient::connect();
+
+        logger->debug("finished worker");
     }
 
-    // client worker
-    void XMPPClient::worker(){
-        logger->debug("started worker thread");
-
+    void XMPPClient::connect(){
         string jabber_id = XMPPClient::config->get_value("xmpp_username")
                 + "@"
                 + XMPPClient::config->get_value("xmpp_server")
@@ -115,8 +117,6 @@ namespace Zabbix { namespace Notifier {
         XMPPClient::client->registerMessageHandler(this);
         XMPPClient::client->registerConnectionListener(this);
         XMPPClient::client->connect();
-
-        logger->debug("finished worker thread");
     }
 
     // setup config and logging

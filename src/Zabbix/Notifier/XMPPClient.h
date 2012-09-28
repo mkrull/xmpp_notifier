@@ -35,17 +35,17 @@ namespace Zabbix { namespace Notifier {
         public:
             XMPPClient(boost::shared_ptr<Config> config, boost::shared_ptr<Logger> logger);
             virtual ~XMPPClient();
-            void run();
+            void worker();
         private:
             boost::shared_ptr<Config> config;
             boost::shared_ptr<Logger> logger;
-            void worker();
             gloox::Client* client;
             virtual void handleMessage(const gloox::Message& stanza, gloox::MessageSession* session = 0);
             virtual void onConnect();
             virtual bool onTLSConnect( const gloox::CertInfo& info );
             virtual void onDisconnect( gloox::ConnectionError e );
             bool check_authorized(string username);
+            void connect();
     };
 
 }
