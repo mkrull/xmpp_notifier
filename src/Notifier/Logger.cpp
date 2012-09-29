@@ -13,7 +13,7 @@ using namespace std;
 namespace Notifier {
 
     void Logger::init(){
-        openlog("zabbix-notifier", LOG_PID | LOG_CONS | LOG_NDELAY, LOG_USER);
+        openlog("xmpp-notifier", LOG_PID | LOG_CONS | LOG_NDELAY, LOG_USER);
     }
 
     bool Logger::set_level(string level){

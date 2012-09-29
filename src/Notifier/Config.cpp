@@ -92,7 +92,6 @@ namespace Notifier {
     vector<string> Config::get_valid_options(){
         vector<string> options = {
                 "user"             , "group"                 ,
-                "zabbix_api_server", "zabbix_api_server_port",
                 "xmpp_username"    , "xmpp_password"         , "xmpp_resource",
                 "log_level"        ,
                 "authorized_users" , "notify_users"          ,
@@ -119,14 +118,13 @@ namespace Notifier {
 
     void Config::init(){
         Config::defaults = {
-            {"user"                  , "zabbix_notifier"},
-            {"group"                 , "zabbix_notifier"},
-            {"zabbix_api_server"     , "localhost"      },
-            {"zabbix_api_server_port", "80"             },
+            {"user"                  , "xmpp_notifier"},
+            {"group"                 , "xmpp_notifier"},
             {"log_level"             , "INFO"           },
             {"xmpp_server"           , "localhost"      },
             {"xmpp_server_port"      , "5223"           },
             {"xmpp_resource"         , "bot_at_work"    },
+            {"authorized_users"      , vector<string>() },
             {"notify_users"          , vector<string>() },
             {"script_dir"            , "scripts"        },
         };

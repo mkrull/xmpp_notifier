@@ -17,22 +17,16 @@ TEST(Basic, ConfigFile){
         Config* config = new Config("t/test.lua");
 
         string user = config->get_value("user");
-        EXPECT_STREQ("zabbix_notifier", user.c_str());
+        EXPECT_STREQ("xmpp_notifier", user.c_str());
 
         string group = config->get_value("group");
-        EXPECT_STREQ("zabbix_notifier", group.c_str());
-
-        string zabbix_api_server = config->get_value("zabbix_api_server");
-        EXPECT_STREQ("localhost", zabbix_api_server.c_str());
-
-        string zabbix_api_server_port = config->get_value("zabbix_api_server_port");
-        EXPECT_STREQ("80", zabbix_api_server_port.c_str());
+        EXPECT_STREQ("xmpp_notifier", group.c_str());
 
         string log_level = config->get_value("log_level");
         EXPECT_STREQ("DEBUG", log_level.c_str());
 
         string xmpp_username = config->get_value("xmpp_username");
-        EXPECT_STREQ("zabbix", xmpp_username.c_str());
+        EXPECT_STREQ("notifier", xmpp_username.c_str());
 
         string xmpp_password = config->get_value("xmpp_password");
         EXPECT_STREQ("test123", xmpp_password.c_str());
@@ -58,22 +52,16 @@ TEST(Basic, Shared){
         boost::shared_ptr<Config> config( new Config("t/test.lua") );
 
         string user = config->get_value("user");
-        EXPECT_STREQ("zabbix_notifier", user.c_str());
+        EXPECT_STREQ("xmpp_notifier", user.c_str());
 
         string group = config->get_value("group");
-        EXPECT_STREQ("zabbix_notifier", group.c_str());
-
-        string zabbix_api_server = config->get_value("zabbix_api_server");
-        EXPECT_STREQ("localhost", zabbix_api_server.c_str());
-
-        string zabbix_api_server_port = config->get_value("zabbix_api_server_port");
-        EXPECT_STREQ("80", zabbix_api_server_port.c_str());
+        EXPECT_STREQ("xmpp_notifier", group.c_str());
 
         string log_level = config->get_value("log_level");
         EXPECT_STREQ("DEBUG", log_level.c_str());
 
         string xmpp_username = config->get_value("xmpp_username");
-        EXPECT_STREQ("zabbix", xmpp_username.c_str());
+        EXPECT_STREQ("notifier", xmpp_username.c_str());
 
         string xmpp_password = config->get_value("xmpp_password");
         EXPECT_STREQ("test123", xmpp_password.c_str());
@@ -100,22 +88,16 @@ TEST(Basic, ExternalLogger){
         boost::shared_ptr<Config> config( new Config(logger, "t/test.lua") );
 
         string user = config->get_value("user");
-        EXPECT_STREQ("zabbix_notifier", user.c_str());
+        EXPECT_STREQ("xmpp_notifier", user.c_str());
 
         string group = config->get_value("group");
-        EXPECT_STREQ("zabbix_notifier", group.c_str());
-
-        string zabbix_api_server = config->get_value("zabbix_api_server");
-        EXPECT_STREQ("localhost", zabbix_api_server.c_str());
-
-        string zabbix_api_server_port = config->get_value("zabbix_api_server_port");
-        EXPECT_STREQ("80", zabbix_api_server_port.c_str());
+        EXPECT_STREQ("xmpp_notifier", group.c_str());
 
         string log_level = config->get_value("log_level");
         EXPECT_STREQ("DEBUG", log_level.c_str());
 
         string xmpp_username = config->get_value("xmpp_username");
-        EXPECT_STREQ("zabbix", xmpp_username.c_str());
+        EXPECT_STREQ("notifier", xmpp_username.c_str());
 
         string xmpp_password = config->get_value("xmpp_password");
         EXPECT_STREQ("test123", xmpp_password.c_str());

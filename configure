@@ -1921,7 +1921,7 @@ test -n "$target_alias" &&
   program_prefix=${target_alias}-
 
 
-CXXFLAGS=-std=c++0x
+CXXFLAGS=-std=c++0x -O2
 
 am__api_version='1.11'
 
