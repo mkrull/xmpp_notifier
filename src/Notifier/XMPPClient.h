@@ -36,6 +36,7 @@ namespace Notifier {
             XMPPClient(boost::shared_ptr<Config> config, boost::shared_ptr<Logger> logger);
             virtual ~XMPPClient();
             void worker();
+            void send_action_reply(string action_name);
         private:
             boost::shared_ptr<Config> config;
             boost::shared_ptr<Logger> logger;

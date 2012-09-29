@@ -50,24 +50,8 @@ namespace Notifier {
         if (XMPPClient::check_authorized(stanza.from().bare())){
             logger->debug("Authorized user: " + stanza.from().bare());
 
-            // TODO actually do something usefull
+            this->send_action_reply(stanza.body());
 
-            // notify notify_users
-            vector<string> users = XMPPClient::config->get_value_list("notify_users");
-            if (!users.empty()){
-                for (vector<string>::iterator it = users.begin(); it != users.end(); it++){
-                    logger->debug("Notifying jid: " + *it);
-                    gloox::Message::MessageType type = gloox::Message::MessageType::Chat;
-                    gloox::JID jid(*it);
-                    Action action;
-                    gloox::Message msg( type , jid, action(XMPPClient::config->get_value("script_dir"), "test"));
-
-                    XMPPClient::client->send(msg);
-                }
-            }
-            else {
-                logger->notice("Notify_users is empty, no notifications sent");
-            }
         }
         else {
             logger->notice("Unauthorized user: " + stanza.from().bare());
@@ -94,6 +78,26 @@ namespace Notifier {
         }
 
         return false;
+    }
+
+    void XMPPClient::send_action_reply(string action_name){
+        // TODO only send if reply is not empty
+        // notify notify_users
+        vector<string> users = XMPPClient::config->get_value_list("notify_users");
+        if (!users.empty()){
+            for (vector<string>::iterator it = users.begin(); it != users.end(); it++){
+                logger->debug("Notifying jid: " + *it);
+                gloox::Message::MessageType type = gloox::Message::MessageType::Chat;
+                gloox::JID jid(*it);
+                Action action;
+                gloox::Message msg( type , jid, action(XMPPClient::config->get_value("script_dir"), action_name));
+
+                XMPPClient::client->send(msg);
+            }
+        }
+        else {
+            logger->notice("Notify_users is empty, no notifications sent");
+        }
     }
 
     //
