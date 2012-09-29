@@ -103,11 +103,33 @@ namespace Notifier {
     }
 
     string Config::get_value(string value) {
-        return boost::get<string>(values[value]);
+        logger->debug("fetching value " + value);
+        string retval;
+        try {
+            retval = boost::get<string>(values[value]);
+        }
+        catch (std::exception& e){
+            string errstring = e.what();
+            logger->err("boost::get failed with: " + errstring);
+            retval = "";
+        }
+
+        return retval;
     }
 
     vector<string> Config::get_value_list(string value) {
-        return boost::get<vector<string> >(values[value]);
+        logger->debug("fetching value_list " + value);
+        vector<string> retval;
+        try {
+            retval = boost::get<vector<string> >(values[value]);
+        }
+        catch (std::exception& e) {
+            string errstring = e.what();
+            logger->err("boost::get failed with: " + errstring);
+            retval = vector<string>();
+        }
+
+        return retval;
     }
 
     void Config::init_logger(){
