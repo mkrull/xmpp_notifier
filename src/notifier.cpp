@@ -1,5 +1,5 @@
 /*
- * zabbix_notifier.cpp
+ * notifier.cpp
  *
  *  Created on: 21.09.2012
  *      Author: mak
@@ -8,12 +8,12 @@
 #include <iostream>
 #include <boost/weak_ptr.hpp>
 
-#include "Zabbix/Notifier/Config.h"
-#include "Zabbix/Notifier/Logger.h"
-#include "Zabbix/Notifier/XMPPClient.h"
+#include "Notifier/Config.h"
+#include "Notifier/Logger.h"
+#include "Notifier/XMPPClient.h"
 
 using namespace std;
-using namespace Zabbix::Notifier;
+using namespace Notifier;
 using namespace boost;
 
 

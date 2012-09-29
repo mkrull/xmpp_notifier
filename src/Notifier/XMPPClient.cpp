@@ -10,9 +10,9 @@
 
 using namespace std;
 using namespace boost;
-using namespace Zabbix::Notifier;
+using namespace Notifier;
 
-namespace Zabbix { namespace Notifier {
+namespace Notifier {
 
     //
     // needed virtual methods
@@ -137,5 +137,4 @@ namespace Zabbix { namespace Notifier {
         sleep(3);
         delete XMPPClient::client;
     }
-}
 }

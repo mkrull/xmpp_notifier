@@ -25,7 +25,7 @@
 using namespace std;
 using namespace boost;
 
-namespace Zabbix { namespace Notifier {
+namespace Notifier {
 
     typedef boost::shared_ptr< asio::io_service > io_svc;
     typedef boost::shared_ptr< asio::io_service::work > io_svc_work;
@@ -47,8 +47,6 @@ namespace Zabbix { namespace Notifier {
             bool check_authorized(string username);
             void connect();
     };
-
-}
 }
 
 #endif /* XMPPCLIENT_H_ */

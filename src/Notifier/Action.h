@@ -14,7 +14,7 @@
 
 using namespace std;
 
-namespace Zabbix { namespace Notifier {
+namespace Notifier {
 
     class Action {
         private:
@@ -40,7 +40,6 @@ namespace Zabbix { namespace Notifier {
             }
     };
 
-}
 }
 
 #endif /* ACTION_H_ */

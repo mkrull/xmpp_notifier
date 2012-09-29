@@ -10,7 +10,7 @@
 
 using namespace std;
 
-namespace Zabbix { namespace Notifier {
+namespace Notifier {
 
     void Logger::init(){
         openlog("zabbix-notifier", LOG_PID | LOG_CONS | LOG_NDELAY, LOG_USER);
@@ -110,5 +110,4 @@ namespace Zabbix { namespace Notifier {
     Logger::~Logger(){
 
     }
-}
 }

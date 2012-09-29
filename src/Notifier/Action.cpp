@@ -7,7 +7,7 @@
 
 #include "Action.h"
 
-namespace Zabbix { namespace Notifier {
+namespace Notifier {
 
     string Action::run_lua_script(string lua_file) const {
         string retval = "Failed to run action.";
@@ -26,6 +26,5 @@ namespace Zabbix { namespace Notifier {
 
         return retval;
     }
-}
 }
 

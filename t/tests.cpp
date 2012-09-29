@@ -5,12 +5,12 @@
  *      Author: mak
  */
 
-#include "../src/Zabbix/Notifier/Config.h"
+#include "../src/Notifier/Config.h"
 #include <gtest/gtest.h>
 #include <boost/shared_ptr.hpp>
 
 using namespace std;
-using namespace Zabbix::Notifier;
+using namespace Notifier;
 
 TEST(Basic, ConfigFile){
 

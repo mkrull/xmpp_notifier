@@ -9,7 +9,7 @@
 
 using namespace std;
 
-namespace Zabbix { namespace Notifier {
+namespace Notifier {
 
     bool Config::load_option(lua_State* L, string option) {
         bool retval = true;
@@ -112,7 +112,7 @@ namespace Zabbix { namespace Notifier {
     }
 
     void Config::init_logger(){
-        boost::shared_ptr<Logger> logger( new Zabbix::Notifier::Logger());
+        boost::shared_ptr<Logger> logger( new Notifier::Logger());
 
         Config::logger = logger;
     }
@@ -155,5 +155,4 @@ namespace Zabbix { namespace Notifier {
 
     Config::~Config(){
     }
-}
 }

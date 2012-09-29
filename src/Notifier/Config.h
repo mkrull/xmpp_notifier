@@ -22,7 +22,7 @@
 
 using namespace std;
 
-namespace Zabbix { namespace Notifier {
+namespace Notifier {
 
     typedef boost::variant<string, vector<string> > Option;
 
@@ -46,7 +46,6 @@ namespace Zabbix { namespace Notifier {
             vector<string> get_valid_options();
     };
 
-}
 }
 
 #endif /* CONFIG_H_ */

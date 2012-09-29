@@ -1,5 +1,5 @@
-bin_PROGRAMS=zabbix_notifier
-zabbix_notifier_SOURCES=zabbix_notifier.cpp Zabbix/Notifier/Config.cpp Zabbix/Notifier/Logger.cpp Zabbix/Notifier/XMPPClient.cpp Zabbix/Notifier/Action.cpp
+bin_PROGRAMS=notifier
+notifier_SOURCES=notifier.cpp Notifier/Config.cpp Notifier/Logger.cpp Notifier/XMPPClient.cpp Notifier/Action.cpp
 
-zabbix_notifier_LDADD = -lgtest -llua -lboost_system -lgloox -lboost_thread
+notifier_LDADD = -lgtest -llua -lboost_system -lgloox -lboost_thread
 

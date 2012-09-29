@@ -182,7 +182,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 tests_LDADD = -lgtest -llua -lboost_system
-tests_SOURCES = tests.cpp ../src/Zabbix/Notifier/Config.cpp ../src/Zabbix/Notifier/Logger.cpp
+tests_SOURCES = tests.cpp ../src/Notifier/Config.cpp ../src/Notifier/Logger.cpp
 all: all-am
 
 .SUFFIXES:
@@ -285,33 +285,33 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
-Config.o: ../src/Zabbix/Notifier/Config.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Config.o -MD -MP -MF $(DEPDIR)/Config.Tpo -c -o Config.o `test -f '../src/Zabbix/Notifier/Config.cpp' || echo '$(srcdir)/'`../src/Zabbix/Notifier/Config.cpp
+Config.o: ../src/Notifier/Config.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Config.o -MD -MP -MF $(DEPDIR)/Config.Tpo -c -o Config.o `test -f '../src/Notifier/Config.cpp' || echo '$(srcdir)/'`../src/Notifier/Config.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Config.Tpo $(DEPDIR)/Config.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/Zabbix/Notifier/Config.cpp' object='Config.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/Notifier/Config.cpp' object='Config.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Config.o `test -f '../src/Zabbix/Notifier/Config.cpp' || echo '$(srcdir)/'`../src/Zabbix/Notifier/Config.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Config.o `test -f '../src/Notifier/Config.cpp' || echo '$(srcdir)/'`../src/Notifier/Config.cpp
 
-Config.obj: ../src/Zabbix/Notifier/Config.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Config.obj -MD -MP -MF $(DEPDIR)/Config.Tpo -c -o Config.obj `if test -f '../src/Zabbix/Notifier/Config.cpp'; then $(CYGPATH_W) '../src/Zabbix/Notifier/Config.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/Zabbix/Notifier/Config.cpp'; fi`
+Config.obj: ../src/Notifier/Config.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Config.obj -MD -MP -MF $(DEPDIR)/Config.Tpo -c -o Config.obj `if test -f '../src/Notifier/Config.cpp'; then $(CYGPATH_W) '../src/Notifier/Config.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/Notifier/Config.cpp'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Config.Tpo $(DEPDIR)/Config.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/Zabbix/Notifier/Config.cpp' object='Config.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/Notifier/Config.cpp' object='Config.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Config.obj `if test -f '../src/Zabbix/Notifier/Config.cpp'; then $(CYGPATH_W) '../src/Zabbix/Notifier/Config.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/Zabbix/Notifier/Config.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Config.obj `if test -f '../src/Notifier/Config.cpp'; then $(CYGPATH_W) '../src/Notifier/Config.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/Notifier/Config.cpp'; fi`
 
-Logger.o: ../src/Zabbix/Notifier/Logger.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Logger.o -MD -MP -MF $(DEPDIR)/Logger.Tpo -c -o Logger.o `test -f '../src/Zabbix/Notifier/Logger.cpp' || echo '$(srcdir)/'`../src/Zabbix/Notifier/Logger.cpp
+Logger.o: ../src/Notifier/Logger.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Logger.o -MD -MP -MF $(DEPDIR)/Logger.Tpo -c -o Logger.o `test -f '../src/Notifier/Logger.cpp' || echo '$(srcdir)/'`../src/Notifier/Logger.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Logger.Tpo $(DEPDIR)/Logger.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/Zabbix/Notifier/Logger.cpp' object='Logger.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/Notifier/Logger.cpp' object='Logger.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Logger.o `test -f '../src/Zabbix/Notifier/Logger.cpp' || echo '$(srcdir)/'`../src/Zabbix/Notifier/Logger.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Logger.o `test -f '../src/Notifier/Logger.cpp' || echo '$(srcdir)/'`../src/Notifier/Logger.cpp
 
-Logger.obj: ../src/Zabbix/Notifier/Logger.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Logger.obj -MD -MP -MF $(DEPDIR)/Logger.Tpo -c -o Logger.obj `if test -f '../src/Zabbix/Notifier/Logger.cpp'; then $(CYGPATH_W) '../src/Zabbix/Notifier/Logger.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/Zabbix/Notifier/Logger.cpp'; fi`
+Logger.obj: ../src/Notifier/Logger.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT Logger.obj -MD -MP -MF $(DEPDIR)/Logger.Tpo -c -o Logger.obj `if test -f '../src/Notifier/Logger.cpp'; then $(CYGPATH_W) '../src/Notifier/Logger.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/Notifier/Logger.cpp'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/Logger.Tpo $(DEPDIR)/Logger.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/Zabbix/Notifier/Logger.cpp' object='Logger.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/Notifier/Logger.cpp' object='Logger.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Logger.obj `if test -f '../src/Zabbix/Notifier/Logger.cpp'; then $(CYGPATH_W) '../src/Zabbix/Notifier/Logger.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/Zabbix/Notifier/Logger.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o Logger.obj `if test -f '../src/Notifier/Logger.cpp'; then $(CYGPATH_W) '../src/Notifier/Logger.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/Notifier/Logger.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
