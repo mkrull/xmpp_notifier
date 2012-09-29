@@ -565,6 +565,7 @@ ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS
 LIBOBJS
+AM_CXXFLAGS
 am__fastdepCXX_FALSE
 am__fastdepCXX_TRUE
 CXXDEPMODE
@@ -1772,13 +1773,6 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-ac_ext=cpp
-ac_cpp='$CXXCPP $CPPFLAGS'
-ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
-ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
-ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
-
-
 ac_aux_dir=
 for ac_dir in build-aux "$srcdir"/build-aux; do
   if test -f "$ac_dir/install-sh"; then
@@ -1920,8 +1914,6 @@ test -n "$target_alias" &&
     NONENONEs,x,x, &&
   program_prefix=${target_alias}-
 
-
-CXXFLAGS=-std=c++0x
 
 am__api_version='1.11'
 
@@ -2401,6 +2393,12 @@ am__tar='$${TAR-tar} chof - "$$tardir"' am__untar='$${TAR-tar} xf -'
 
 
 
+
+ac_ext=cpp
+ac_cpp='$CXXCPP $CPPFLAGS'
+ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'
@@ -3099,6 +3097,8 @@ else
   am__fastdepCXX_FALSE=
 fi
 
+
+AM_CXXFLAGS=-std=gnu++0x
 
 
 ac_config_files="$ac_config_files Makefile src/Makefile t/Makefile"

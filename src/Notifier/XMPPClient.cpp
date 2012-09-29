@@ -133,8 +133,6 @@ namespace Notifier {
 
     // destroy all
     XMPPClient::~XMPPClient() {
-        // wait to log messages
-        sleep(3);
         delete XMPPClient::client;
     }
 }
