@@ -45,6 +45,13 @@ TEST(Basic, ConfigFile){
         EXPECT_STREQ("user2", (authorized_users[1]).c_str());
         EXPECT_STREQ("user3", (authorized_users[2]).c_str());
 
+        map<string, int> tasks = config->get_value_map("tasks");
+        EXPECT_EQ(10, tasks["test"]);
+        EXPECT_EQ(3, tasks["more"]);
+        EXPECT_EQ(300, tasks["evenmore"]);
+
+        delete config;
+
 }
 
 TEST(Basic, Shared){
@@ -79,6 +86,11 @@ TEST(Basic, Shared){
         EXPECT_STREQ("user1", (authorized_users[0]).c_str());
         EXPECT_STREQ("user2", (authorized_users[1]).c_str());
         EXPECT_STREQ("user3", (authorized_users[2]).c_str());
+
+        map<string, int> tasks = config->get_value_map("tasks");
+        EXPECT_EQ(10, tasks["test"]);
+        EXPECT_EQ(3, tasks["more"]);
+        EXPECT_EQ(300, tasks["evenmore"]);
 
 }
 
@@ -115,6 +127,11 @@ TEST(Basic, ExternalLogger){
         EXPECT_STREQ("user1", (authorized_users[0]).c_str());
         EXPECT_STREQ("user2", (authorized_users[1]).c_str());
         EXPECT_STREQ("user3", (authorized_users[2]).c_str());
+
+        map<string, int> tasks = config->get_value_map("tasks");
+        EXPECT_EQ(10, tasks["test"]);
+        EXPECT_EQ(3, tasks["more"]);
+        EXPECT_EQ(300, tasks["evenmore"]);
 
 }
 

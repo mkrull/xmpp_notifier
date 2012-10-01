@@ -83,6 +83,7 @@ namespace Notifier {
     void XMPPClient::send_action_reply(string action_name){
         // TODO only send if reply is not empty
         // notify notify_users
+        lock_guard<boost::mutex> lock(XMPPClient::sender_mutex);
         vector<string> users = XMPPClient::config->get_value_list("notify_users");
         if (!users.empty()){
             for (vector<string>::iterator it = users.begin(); it != users.end(); it++){

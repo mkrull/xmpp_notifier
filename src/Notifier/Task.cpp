@@ -9,13 +9,6 @@
 
 namespace Notifier {
 
-//    Task::Task(
-//            string action,
-//            int interval,
-//            shared_ptr<XMPPClient> xmpp_client,
-//            shared_ptr<Config> config,
-//            shared_ptr<Logger> logger) {}
-
     void Task::run_task(){
         while (true){
             sleep (interval);

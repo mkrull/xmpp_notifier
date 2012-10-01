@@ -38,6 +38,7 @@ namespace Notifier {
             void worker();
             void send_action_reply(string action_name);
         private:
+            boost::mutex sender_mutex;
             boost::shared_ptr<Config> config;
             boost::shared_ptr<Logger> logger;
             gloox::Client* client;

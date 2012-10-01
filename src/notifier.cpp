@@ -17,33 +17,56 @@ using namespace std;
 using namespace Notifier;
 using namespace boost;
 
+void worker_task(Task* task){
+    task->run_task();
+}
+
+void worker_client(boost::shared_ptr<XMPPClient> client){
+    client->worker();
+}
 
 int main(void) {
+
     boost::shared_ptr<Config> config(new Config("/home/mak/test.lua"));
     boost::shared_ptr<Logger> logger(new Logger());
+
+    logger->set_level(config->get_value("log_level"));
 
     boost::shared_ptr<XMPPClient> client(new XMPPClient(config, logger));
     boost::weak_ptr<XMPPClient> client_check(client);
 
-    boost::shared_ptr<XMPPClient> client_ptr;
+    thread_group tasks;
+    map<string, int> tasks_map = config->get_value_map("tasks");
+    if (!tasks_map.empty()){
+        for (map<string, int>::iterator i = tasks_map.begin(); i != tasks_map.end(); i++){
+            string action = i->first;
+            int interval  = i->second;
 
-    thread worker(bind(&XMPPClient::worker, client.get()));
+            logger->notice("Creating task " + action);
+            Task* task(new Task(action, interval, client, config, logger));
 
-    // TODO replace test with thread group with one tread for each task
-    Task* task = new Task("test", 10, client, config, logger);
-    thread tasker(bind(&Task::run_task, task));
+            tasks.create_thread(bind( &worker_task, task));
+        }
+    }
+    else {
+        logger->notice("No scheduled tasks defined");
+    }
 
-    while (true) {
-        if (client_ptr) {
-            logger->debug("XMPP Client exists");
+    tasks.create_thread(bind(&worker_client, client));
+
+    while (true){
+        boost::shared_ptr<XMPPClient> client_ptr = client_check.lock();
+
+        if (client_ptr){
+            logger->debug("XMPP Client object still alive");
             sleep (10);
+
         }
         else {
-            logger->crit("XMPP Client destroyed");
-            worker.join();
-            sleep(10);
+            logger->crit("XMPP Client object destroyed");
+            break;
         }
     }
 
-
+    tasks.join_all();
 }

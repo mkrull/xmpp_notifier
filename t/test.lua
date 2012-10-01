@@ -39,7 +39,14 @@ xmpp_password = "test123"
 log_level = "DEBUG"
 
 authorized_users = {
-	"user1",
-	"user2",
-	"user3"
+    "user1",
+    "user2",
+    "user3"
 }
+
+tasks = {
+    { test = 10 },
+    { more = 3 },
+    { evenmore = 300 }
+}
+

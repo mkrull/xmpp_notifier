@@ -32,24 +32,45 @@ namespace Notifier {
             if (lua_istable(L, 1)) {
                 logger->debug(option + " is a table");
 
-                vector<string> vector;
+                vector<string> table_rows;
+                map<string, int> table_map;
 
-                int table_length = lua_objlen(L,1);
+                int table_length = lua_objlen(L, 1);
 
                 // read table into vector
-                // TODO check if rows are strings
                 for (int i = 1; i <= table_length; i++) {
                     lua_pushinteger(L, i);
                     lua_gettable(L, 1);
-                    string table_row = lua_tostring(L, -1);
 
-                    logger->debug("Loading table row value " + table_row + " into " + option);
+                    if (lua_istable(L, -1)){
+                        logger->debug("table row of " + option + " is a table");
+                        lua_pushnil(L);
+                        lua_next(L, -2);
 
-                    vector.push_back(table_row);
-                    lua_pop(L, 1);
+                        // TODO check values
+                        string key = lua_tostring(L, -2);
+                        int value  = lua_tointeger(L, -1);
+
+                        table_map[key] = value;
+
+                        lua_pop(L, 3);
+                    }
+                    else if (lua_isstring(L, -1)){
+                        logger->debug("table row of " + option + " is a string");
+                        string table_row = lua_tostring(L, -1);
+
+                        logger->debug("Loading table row value " + table_row + " into " + option);
+
+                        table_rows.push_back(table_row);
+                        lua_pop(L, 1);
+                    }
                 }
 
-                Config::values[option] = vector;
+                if (!table_rows.empty())
+                    Config::values[option] = table_rows;
+
+                if (!table_map.empty())
+                    Config::values[option] = table_map;
             }
             else if (lua_isnil(L, 1)){
                 if (defaults.find(option) == defaults.end()){
@@ -96,7 +117,7 @@ namespace Notifier {
                 "log_level"        ,
                 "authorized_users" , "notify_users"          ,
                 "xmpp_server"      , "xmpp_server_port"      ,
-                "script_dir"
+                "script_dir"       , "tasks"
         };
 
         return options;
@@ -110,7 +131,7 @@ namespace Notifier {
         }
         catch (std::exception& e){
             string errstring = e.what();
-            logger->err("boost::get failed with: " + errstring);
+            logger->err("boost::get failed on " + value + " with: " + errstring);
             retval = "";
         }
 
@@ -125,8 +146,23 @@ namespace Notifier {
         }
         catch (std::exception& e) {
             string errstring = e.what();
-            logger->err("boost::get failed with: " + errstring);
+            logger->err("boost::get failed on " + value + " with: " + errstring);
             retval = vector<string>();
+        }
+
+        return retval;
+    }
+
+    map<string, int> Config::get_value_map(string value) {
+        logger->debug("fetching value map " + value);
+        map<string, int> retval;
+        try {
+            retval = boost::get<map<string, int> >(values[value]);
+        }
+        catch (std::exception& e){
+            string errstring = e.what();
+            logger->err("boost::get failed on " + value + " with: " + errstring);
+            retval = map<string, int>();
         }
 
         return retval;
@@ -140,15 +176,16 @@ namespace Notifier {
 
     void Config::init(){
         Config::defaults = {
-            {"user"                  , "xmpp_notifier"},
-            {"group"                 , "xmpp_notifier"},
-            {"log_level"             , "INFO"           },
-            {"xmpp_server"           , "localhost"      },
-            {"xmpp_server_port"      , "5223"           },
-            {"xmpp_resource"         , "bot_at_work"    },
-            {"authorized_users"      , vector<string>() },
-            {"notify_users"          , vector<string>() },
-            {"script_dir"            , "scripts"        },
+            {"user"                  , "xmpp_notifier"    },
+            {"group"                 , "xmpp_notifier"    },
+            {"log_level"             , "INFO"             },
+            {"xmpp_server"           , "localhost"        },
+            {"xmpp_server_port"      , "5223"             },
+            {"xmpp_resource"         , "bot_at_work"      },
+            {"authorized_users"      , vector<string>()   },
+            {"notify_users"          , vector<string>()   },
+            {"script_dir"            , "scripts"          },
+            {"tasks"                 , map<string, int>() },
         };
     }
 

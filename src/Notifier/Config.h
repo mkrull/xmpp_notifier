@@ -18,13 +18,13 @@
 #include <cstdlib>
 #include "Logger.h"
 
-#define LOGLEVEL "INFO"
+#define LOGLEVEL "DEBUG"
 
 using namespace std;
 
 namespace Notifier {
 
-    typedef boost::variant<string, vector<string> > Option;
+    typedef boost::variant<string, vector<string>, map<string, int> > Option;
 
     class Config {
         public:
@@ -33,6 +33,7 @@ namespace Notifier {
             ~Config();
             string get_value(string value);
             vector<string> get_value_list(string value_list);
+            map<string, int> get_value_map(string value);
 
         private:
             bool load(string config_file);
