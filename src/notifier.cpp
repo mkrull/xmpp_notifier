@@ -69,4 +69,8 @@ int main(void) {
     }
 
     tasks.join_all();
+
+    delete client.get();
+    delete config.get();
+    delete logger.get();
 }

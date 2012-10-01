@@ -21,8 +21,9 @@ namespace Notifier {
             }
 
             lua_pop(L, 1);
-            lua_close(L);
         }
+
+        lua_close(L);
 
         return retval;
     }
