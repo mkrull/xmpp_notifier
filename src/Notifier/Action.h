@@ -19,24 +19,25 @@ namespace Notifier {
     class Action {
         private:
             // for built in actions
-            map<string, string (*)()> dispatch_table;
+            map<string, string (* ) () > dispatch_table;
 
             // run embedded interpreters
-            string run_lua_script(string lua_file) const;
+            string run_lua_script ( string lua_file ) const;
             // TODO string run_perl_script(string lua_file) const;
 
         public:
             // run built in actions
-            string operator()(string name) const {
+            string operator() ( string name ) const {
                 return name;
             }
-            string operator()(string script_dir, string name) const {
+            string operator() ( string script_dir, string name ) const {
                 string lua_file = script_dir + "/lua/" + name;
+
                 // append .lua if not the file suffix
-                if (lua_file.compare(lua_file.length() - 4, 4, ".lua") != 0)
+                if ( lua_file.compare ( lua_file.length() - 4, 4, ".lua" ) != 0 )
                     lua_file += ".lua";
 
-                return run_lua_script(lua_file);
+                return run_lua_script ( lua_file );
             }
     };
 

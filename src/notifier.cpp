@@ -17,53 +17,54 @@ using namespace std;
 using namespace Notifier;
 using namespace boost;
 
-void worker_task(Task* task){
+void worker_task ( Task* task ) {
     task->run_task();
 }
 
-void worker_client(boost::shared_ptr<XMPPClient> client){
+void worker_client ( boost::shared_ptr<XMPPClient> client ) {
     client->worker();
 }
 
-int main(void) {
+int main ( void ) {
 
-    boost::shared_ptr<Config> config(new Config("/home/mak/test.lua"));
-    boost::shared_ptr<Logger> logger(new Logger());
+    boost::shared_ptr<Config> config ( new Config ( "/home/mak/test.lua" ) );
+    boost::shared_ptr<Logger> logger ( new Logger() );
 
-    logger->set_level(config->get_value("log_level"));
+    logger->set_level ( config->get_value ( "log_level" ) );
 
-    boost::shared_ptr<XMPPClient> client(new XMPPClient(config, logger));
-    boost::weak_ptr<XMPPClient> client_check(client);
+    boost::shared_ptr<XMPPClient> client ( new XMPPClient ( config, logger ) );
+    boost::weak_ptr<XMPPClient> client_check ( client );
 
     thread_group tasks;
-    map<string, int> tasks_map = config->get_value_map("tasks");
-    if (!tasks_map.empty()){
-        for (map<string, int>::iterator i = tasks_map.begin(); i != tasks_map.end(); i++){
+    map<string, int> tasks_map = config->get_value_map ( "tasks" );
+
+    if ( !tasks_map.empty() ) {
+        for ( map<string, int>::iterator i = tasks_map.begin(); i != tasks_map.end(); i++ ) {
             string action = i->first;
             int interval  = i->second;
 
-            logger->notice("Creating task " + action);
-            Task* task(new Task(action, interval, client));
+            logger->notice ( "Creating task " + action );
+            Task* task ( new Task ( action, interval, client ) );
 
-            tasks.create_thread(bind( &worker_task, task));
+            tasks.create_thread ( bind ( &worker_task, task ) );
         }
     }
     else {
-        logger->notice("No scheduled tasks defined");
+        logger->notice ( "No scheduled tasks defined" );
     }
 
-    tasks.create_thread(bind(&worker_client, client));
+    tasks.create_thread ( bind ( &worker_client, client ) );
 
-    while (true){
+    while ( true ) {
         boost::shared_ptr<XMPPClient> client_ptr = client_check.lock();
 
-        if (client_ptr){
-            logger->debug("XMPP Client object still alive");
-            sleep (10);
+        if ( client_ptr ) {
+            logger->debug ( "XMPP Client object still alive" );
+            sleep ( 10 );
 
         }
         else {
-            logger->crit("XMPP Client object destroyed");
+            logger->crit ( "XMPP Client object destroyed" );
             break;
         }
     }

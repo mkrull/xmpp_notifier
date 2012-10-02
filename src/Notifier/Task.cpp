@@ -9,10 +9,10 @@
 
 namespace Notifier {
 
-    void Task::run_task(){
-        while (true){
-            sleep (interval);
-            client->send_action_reply(action);
+    void Task::run_task() {
+        while ( true ) {
+            sleep ( interval );
+            client->send_action_reply ( action );
         }
     }
 

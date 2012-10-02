@@ -33,20 +33,20 @@ namespace Notifier {
 
     class XMPPClient : public gloox::MessageHandler, gloox::ConnectionListener {
         public:
-            XMPPClient(boost::shared_ptr<Config> config, boost::shared_ptr<Logger> logger);
+            XMPPClient ( boost::shared_ptr<Config> config, boost::shared_ptr<Logger> logger );
             virtual ~XMPPClient();
             void worker();
-            void send_action_reply(string action_name);
+            void send_action_reply ( string action_name );
         private:
             boost::mutex sender_mutex;
             boost::shared_ptr<Config> config;
             boost::shared_ptr<Logger> logger;
             gloox::Client* client;
-            virtual void handleMessage(const gloox::Message& stanza, gloox::MessageSession* session = 0);
+            virtual void handleMessage ( const gloox::Message& stanza, gloox::MessageSession* session = 0 );
             virtual void onConnect();
-            virtual bool onTLSConnect( const gloox::CertInfo& info );
-            virtual void onDisconnect( gloox::ConnectionError e );
-            bool check_authorized(string username);
+            virtual bool onTLSConnect ( const gloox::CertInfo& info );
+            virtual void onDisconnect ( gloox::ConnectionError e );
+            bool check_authorized ( string username );
             void connect();
     };
 }

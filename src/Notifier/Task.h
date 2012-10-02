@@ -24,13 +24,13 @@ namespace Notifier {
             string action;
             int interval;
         public:
-            Task(
-                    string action,
-                    int interval,
-                    boost::shared_ptr<XMPPClient> xmpp_client
-            ) : action(action),
-                interval(interval),
-                client(xmpp_client)
+            Task (
+                string action,
+                int interval,
+                boost::shared_ptr<XMPPClient> xmpp_client
+            ) : action ( action ),
+                interval ( interval ),
+                client ( xmpp_client )
             {};
 
             void run_task();

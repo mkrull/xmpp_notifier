@@ -11,170 +11,173 @@ using namespace std;
 
 namespace Notifier {
 
-    bool Config::load_option(lua_State* L, string option) {
+    bool Config::load_option ( lua_State* L, string option ) {
         bool retval = true;
-        logger->debug("Loading config value " + option);
+        logger->debug ( "Loading config value " + option );
 
         // laod value
-        lua_getglobal(L, option.c_str());
+        lua_getglobal ( L, option.c_str() );
 
         // check if stack element is convertable into string
-        if (lua_isstring(L, 1)) {
-            logger->debug(option + " is a string value");
+        if ( lua_isstring ( L, 1 ) ) {
+            logger->debug ( option + " is a string value" );
 
-            string value = lua_tostring(L, 1);
+            string value = lua_tostring ( L, 1 );
             Config::values[option] = value;
 
-            logger->debug("got value " + value + " for " + option);
+            logger->debug ( "got value " + value + " for " + option );
         }
         else {
             // check if stack value is table
-            if (lua_istable(L, 1)) {
-                logger->debug(option + " is a table");
+            if ( lua_istable ( L, 1 ) ) {
+                logger->debug ( option + " is a table" );
 
                 vector<string> table_rows;
                 map<string, int> table_map;
 
-                int table_length = lua_objlen(L, 1);
+                int table_length = lua_objlen ( L, 1 );
 
                 // read table into vector
-                for (int i = 1; i <= table_length; i++) {
-                    lua_pushinteger(L, i);
-                    lua_gettable(L, 1);
+                for ( int i = 1; i <= table_length; i++ ) {
+                    lua_pushinteger ( L, i );
+                    lua_gettable ( L, 1 );
 
-                    if (lua_istable(L, -1)){
-                        logger->debug("table row of " + option + " is a table");
-                        lua_pushnil(L);
-                        lua_next(L, -2);
+                    if ( lua_istable ( L, -1 ) ) {
+                        logger->debug ( "table row of " + option + " is a table" );
+                        lua_pushnil ( L );
+                        lua_next ( L, -2 );
 
                         // TODO check values
-                        string key = lua_tostring(L, -2);
-                        int value  = lua_tointeger(L, -1);
+                        string key = lua_tostring ( L, -2 );
+                        int value  = lua_tointeger ( L, -1 );
 
                         table_map[key] = value;
 
-                        lua_pop(L, 3);
+                        lua_pop ( L, 3 );
                     }
-                    else if (lua_isstring(L, -1)){
-                        logger->debug("table row of " + option + " is a string");
-                        string table_row = lua_tostring(L, -1);
+                    else if ( lua_isstring ( L, -1 ) ) {
+                        logger->debug ( "table row of " + option + " is a string" );
+                        string table_row = lua_tostring ( L, -1 );
 
-                        logger->debug("Loading table row value " + table_row + " into " + option);
+                        logger->debug ( "Loading table row value " + table_row + " into " + option );
 
-                        table_rows.push_back(table_row);
-                        lua_pop(L, 1);
+                        table_rows.push_back ( table_row );
+                        lua_pop ( L, 1 );
                     }
                 }
 
-                if (!table_rows.empty())
+                if ( !table_rows.empty() )
                     Config::values[option] = table_rows;
 
-                if (!table_map.empty())
+                if ( !table_map.empty() )
                     Config::values[option] = table_map;
             }
-            else if (lua_isnil(L, 1)){
-                if (defaults.find(option) == defaults.end()){
-                    logger->crit(option + " must be defined");
+            else if ( lua_isnil ( L, 1 ) ) {
+                if ( defaults.find ( option ) == defaults.end() ) {
+                    logger->crit ( option + " must be defined" );
                     retval = false;
                 }
                 else {
                     values[option] = defaults[option];
-                    logger->warn(option + " not defined in config file, using default: " + get_value(option));
+                    logger->warn ( option + " not defined in config file, using default: " + get_value ( option ) );
                 }
             }
         }
 
         // pop last value to keep stack in clean state
-        lua_pop(L, 1);
+        lua_pop ( L, 1 );
         return retval;
     }
 
-    bool Config::load(string config_file) {
+    bool Config::load ( string config_file ) {
 
         vector<string> options = get_valid_options();
 
         lua_State* L = luaL_newstate();
 
-        if (luaL_dofile(L, config_file.c_str())) {
+        if ( luaL_dofile ( L, config_file.c_str() ) ) {
             return false;
         }
 
-        for (vector<string>::iterator it = options.begin(); it != options.end(); it++){
-            if (Config::load_option(L, *it) == false) {
-                lua_close(L);
+        for ( vector<string>::iterator it = options.begin(); it != options.end(); it++ ) {
+            if ( Config::load_option ( L, *it ) == false ) {
+                lua_close ( L );
                 return false;
             }
         }
 
-        lua_close(L);
+        lua_close ( L );
         return true;
     }
 
-    vector<string> Config::get_valid_options(){
+    vector<string> Config::get_valid_options() {
         vector<string> options = {
-                "user"             , "group"                 ,
-                "xmpp_username"    , "xmpp_password"         , "xmpp_resource",
-                "log_level"        ,
-                "authorized_users" , "notify_users"          ,
-                "xmpp_server"      , "xmpp_server_port"      ,
-                "script_dir"       , "tasks"
+            "user"             , "group"                 ,
+            "xmpp_username"    , "xmpp_password"         , "xmpp_resource",
+            "log_level"        ,
+            "authorized_users" , "notify_users"          ,
+            "xmpp_server"      , "xmpp_server_port"      ,
+            "script_dir"       , "tasks"
         };
 
         return options;
     }
 
-    string Config::get_value(string value) {
-        logger->debug("fetching value " + value);
+    string Config::get_value ( string value ) {
+        logger->debug ( "fetching value " + value );
         string retval;
+
         try {
-            retval = boost::get<string>(values[value]);
+            retval = boost::get<string> ( values[value] );
         }
-        catch (std::exception& e){
+        catch ( std::exception& e ) {
             string errstring = e.what();
-            logger->err("boost::get failed on " + value + " with: " + errstring);
+            logger->err ( "boost::get failed on " + value + " with: " + errstring );
             retval = "";
         }
 
         return retval;
     }
 
-    vector<string> Config::get_value_list(string value) {
-        logger->debug("fetching value_list " + value);
+    vector<string> Config::get_value_list ( string value ) {
+        logger->debug ( "fetching value_list " + value );
         vector<string> retval;
+
         try {
-            retval = boost::get<vector<string> >(values[value]);
+            retval = boost::get<vector<string> > ( values[value] );
         }
-        catch (std::exception& e) {
+        catch ( std::exception& e ) {
             string errstring = e.what();
-            logger->err("boost::get failed on " + value + " with: " + errstring);
+            logger->err ( "boost::get failed on " + value + " with: " + errstring );
             retval = vector<string>();
         }
 
         return retval;
     }
 
-    map<string, int> Config::get_value_map(string value) {
-        logger->debug("fetching value map " + value);
+    map<string, int> Config::get_value_map ( string value ) {
+        logger->debug ( "fetching value map " + value );
         map<string, int> retval;
+
         try {
-            retval = boost::get<map<string, int> >(values[value]);
+            retval = boost::get<map<string, int> > ( values[value] );
         }
-        catch (std::exception& e){
+        catch ( std::exception& e ) {
             string errstring = e.what();
-            logger->err("boost::get failed on " + value + " with: " + errstring);
+            logger->err ( "boost::get failed on " + value + " with: " + errstring );
             retval = map<string, int>();
         }
 
         return retval;
     }
 
-    void Config::init_logger(){
-        boost::shared_ptr<Logger> logger( new Notifier::Logger());
+    void Config::init_logger() {
+        boost::shared_ptr<Logger> logger ( new Notifier::Logger() );
 
         Config::logger = logger;
     }
 
-    void Config::init(){
+    void Config::init() {
         Config::defaults = {
             {"user"                  , "xmpp_notifier"    },
             {"group"                 , "xmpp_notifier"    },
@@ -189,27 +192,27 @@ namespace Notifier {
         };
     }
 
-    Config::Config(boost::shared_ptr<Logger> logger, string config_file){
+    Config::Config ( boost::shared_ptr<Logger> logger, string config_file ) {
         Config::logger = logger;
-        Config::logger->set_level(LOGLEVEL);
+        Config::logger->set_level ( LOGLEVEL );
 
         init();
 
-        if (Config::load(config_file) == false)
-            throw runtime_error("Could not load config file.");
+        if ( Config::load ( config_file ) == false )
+            throw runtime_error ( "Could not load config file." );
 
     }
 
-    Config::Config(string config_file){
+    Config::Config ( string config_file ) {
 
         Config::init();
         Config::init_logger();
-        Config::logger->set_level(LOGLEVEL);
+        Config::logger->set_level ( LOGLEVEL );
 
-        if (Config::load(config_file) == false)
-            throw runtime_error("Could not load config file.");
+        if ( Config::load ( config_file ) == false )
+            throw runtime_error ( "Could not load config file." );
     }
 
-    Config::~Config(){
+    Config::~Config() {
     }
 }

@@ -30,17 +30,17 @@ namespace Notifier {
             Logger();
             ~Logger();
 
-            void emerg(string line);
-            void alert(string line);
-            void crit(string line);
-            void err(string line);
-            void warn(string line);
-            void notice(string line);
-            void info(string line);
-            void debug(string line);
-            void log(string line, string level);
+            void emerg ( string line );
+            void alert ( string line );
+            void crit ( string line );
+            void err ( string line );
+            void warn ( string line );
+            void notice ( string line );
+            void info ( string line );
+            void debug ( string line );
+            void log ( string line, string level );
 
-            bool set_level(string level);
+            bool set_level ( string level );
         private:
             void init();
 

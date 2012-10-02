@@ -3,5 +3,7 @@
 .project
 .settings/*
 *.swp
+*~
+*.kdev4
 tags
 types_c.taghl

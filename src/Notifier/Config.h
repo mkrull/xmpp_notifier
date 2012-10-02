@@ -28,16 +28,16 @@ namespace Notifier {
 
     class Config {
         public:
-            Config(string config_file);
-            Config(boost::shared_ptr<Logger> logger, string config_file);
+            Config ( string config_file );
+            Config ( boost::shared_ptr<Logger> logger, string config_file );
             ~Config();
-            string get_value(string value);
-            vector<string> get_value_list(string value_list);
-            map<string, int> get_value_map(string value);
+            string get_value ( string value );
+            vector<string> get_value_list ( string value_list );
+            map<string, int> get_value_map ( string value );
 
         private:
-            bool load(string config_file);
-            bool load_option(lua_State* L, string option);
+            bool load ( string config_file );
+            bool load_option ( lua_State* L, string option );
 
             boost::shared_ptr<Logger> logger;
             map<string, Option> values;
