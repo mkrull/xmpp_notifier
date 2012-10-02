@@ -21,22 +21,16 @@ namespace Notifier {
     class Task {
         private:
             boost::shared_ptr<XMPPClient> client;
-            boost::shared_ptr<Config> config;
-            boost::shared_ptr<Logger> logger;
             string action;
             int interval;
         public:
             Task(
                     string action,
                     int interval,
-                    boost::shared_ptr<XMPPClient> xmpp_client,
-                    boost::shared_ptr<Config> config,
-                    boost::shared_ptr<Logger> logger
+                    boost::shared_ptr<XMPPClient> xmpp_client
             ) : action(action),
                 interval(interval),
-                client(xmpp_client),
-                config(config),
-                logger(logger)
+                client(xmpp_client)
             {};
 
             void run_task();

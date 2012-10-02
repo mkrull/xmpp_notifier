@@ -43,7 +43,7 @@ int main(void) {
             int interval  = i->second;
 
             logger->notice("Creating task " + action);
-            Task* task(new Task(action, interval, client, config, logger));
+            Task* task(new Task(action, interval, client));
 
             tasks.create_thread(bind( &worker_task, task));
         }

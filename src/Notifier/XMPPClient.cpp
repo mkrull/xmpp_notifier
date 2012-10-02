@@ -123,7 +123,13 @@ namespace Notifier {
         XMPPClient::client = new gloox::Client( jid, XMPPClient::config->get_value("xmpp_password"));
         XMPPClient::client->registerMessageHandler(this);
         XMPPClient::client->registerConnectionListener(this);
-        XMPPClient::client->connect();
+
+        XMPPClient::client->connect( false );
+
+        gloox::ConnectionError e;
+        while ( e == gloox::ConnNoError ){
+            e = XMPPClient::client->recv();
+        }
     }
 
     // setup config and logging
