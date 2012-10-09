@@ -27,11 +27,11 @@ void worker_client ( boost::shared_ptr<XMPPClient> client ) {
     client->worker();
 }
 
-int main ( int argc, const char** argv ) {
+int main ( int argc, char* argv[] ) {
 
     const struct option longopts[] = {
-        {"config", required_argument, NULL, 'c'},
-        {NULL, NULL, NULL, NULL},
+        { "config", required_argument, 0, 'c' },
+        { 0, 0, 0, 0 },
     };
 
     int index;
