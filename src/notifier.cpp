@@ -46,6 +46,8 @@ int main ( int argc, char* argv[] ) {
             case 'c':
                 config_file = optarg;
                 break;
+            case -1:
+                break;
             case 'h':
                 cout << "Usage: notifier -c <config_file>" << endl;
                 return 0;

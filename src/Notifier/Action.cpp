@@ -12,6 +12,8 @@ namespace Notifier {
     string Action::run_lua_script ( string lua_file ) const {
         string retval = "Failed to run action.";
         lua_State* L = luaL_newstate();
+        // load lua libs
+        luaL_openlibs(L);
 
         if ( luaL_dofile ( L, lua_file.c_str() ) == 0 ) {
             lua_getglobal ( L, "result" );
@@ -21,6 +23,9 @@ namespace Notifier {
             }
 
             lua_pop ( L, 1 );
+        }
+        else {
+            result = lua_tostring ( L, -1 );
         }
 
         lua_close ( L );
