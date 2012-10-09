@@ -27,7 +27,7 @@ void worker_client ( boost::shared_ptr<XMPPClient> client ) {
     client->worker();
 }
 
-int main ( void ) {
+int main ( int argc, const char** argv ) {
 
     const struct option longopts[] = {
         {"config", required_argument, NULL, 'c'},
@@ -47,17 +47,17 @@ int main ( void ) {
                 break;
             case 'h':
                 cout << "Usage: notifier -c <config_file>" << endl;
-                exit 0;
+                return 0;
             default:
                 cout << "Usage: notifier -c <config_file>" << endl;
-                exit 0;
+                return 0;
         }
     }
 
     ifstream file(config_file);
     if (!file){
         cerr << "Error: Could not read config file." << endl;
-        exit 1;
+        return 1;
     }
 
     boost::shared_ptr<Config> config ( new Config ( config_file ) );
