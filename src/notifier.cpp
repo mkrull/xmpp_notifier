@@ -7,6 +7,8 @@
 
 #include <iostream>
 #include <boost/weak_ptr.hpp>
+#include <boost/shared_ptr.hpp>
+#include <getopt.h>
 
 #include "Notifier/Config.h"
 #include "Notifier/Logger.h"
@@ -27,7 +29,38 @@ void worker_client ( boost::shared_ptr<XMPPClient> client ) {
 
 int main ( void ) {
 
-    boost::shared_ptr<Config> config ( new Config ( "/home/mak/test.lua" ) );
+    const struct option longopts[] = {
+        {"config", required_argument, NULL, 'c'},
+        {NULL, NULL, NULL, NULL},
+    };
+
+    int index;
+    int arg = 0;
+    string config_file = "";
+
+    while (arg != -1){
+        arg = getopt_long(argc, argv, "c:h", longopts, &index);
+
+        switch (arg){
+            case 'c':
+                config_file = optarg;
+                break;
+            case 'h':
+                cout << "Usage: notifier -c <config_file>" << endl;
+                exit 0;
+            default:
+                cout << "Usage: notifier -c <config_file>" << endl;
+                exit 0;
+        }
+    }
+
+    ifstream file(config_file);
+    if (!file){
+        cerr << "Error: Could not read config file." << endl;
+        exit 1;
+    }
+
+    boost::shared_ptr<Config> config ( new Config ( config_file ) );
     boost::shared_ptr<Logger> logger ( new Logger() );
 
     logger->set_level ( config->get_value ( "log_level" ) );
