@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include <fstream>
 #include <boost/weak_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 #include <getopt.h>
@@ -54,7 +55,7 @@ int main ( int argc, char* argv[] ) {
         }
     }
 
-    ifstream file(config_file);
+    ifstream file(config_file.c_str());
     if (!file){
         cerr << "Error: Could not read config file." << endl;
         return 1;
