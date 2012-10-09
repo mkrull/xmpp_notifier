@@ -25,7 +25,7 @@ namespace Notifier {
             lua_pop ( L, 1 );
         }
         else {
-            result = lua_tostring ( L, -1 );
+            retval = lua_tostring ( L, -1 );
         }
 
         lua_close ( L );
