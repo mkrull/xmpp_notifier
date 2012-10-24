@@ -15,55 +15,73 @@ namespace Notifier {
         bool retval = true;
         logger->debug ( "Loading config value " + option );
 
+        // reset stack index
+        lua_settop ( L, 0 );
         // laod value
         lua_getglobal ( L, option.c_str() );
 
         // check if stack element is convertable into string
-        if ( lua_isstring ( L, 1 ) ) {
+        if ( lua_isstring ( L, -1 ) ) {
             logger->debug ( option + " is a string value" );
 
-            string value = lua_tostring ( L, 1 );
+            string value = lua_tostring ( L, -1 );
             Config::values[option] = value;
 
             logger->debug ( "got value " + value + " for " + option );
         }
-        else {
-            // check if stack value is table
-            if ( lua_istable ( L, 1 ) ) {
-                logger->debug ( option + " is a table" );
+        else if ( lua_isnil ( L, 1 ) ) {
+            if ( defaults.find ( option ) == defaults.end() ) {
+                logger->crit ( option + " must be defined" );
+                retval = false;
+            }
+            else {
+                values[option] = defaults[option];
+                logger->warn ( option + " not defined in config file, using default: " + get_value ( option ) );
+            }
+        }
+        else if ( lua_istable ( L, -1 ) ) {
+            logger->debug ( option + " is a table" );
 
-                vector<string> table_rows;
-                map<string, int> table_map;
+            vector<string> table_rows;
+            map<string, int> table_map;
 
-                int table_length = lua_objlen ( L, 1 );
+            int table_length = lua_objlen ( L, -1 );
 
-                // read table into vector
-                for ( int i = 1; i <= table_length; i++ ) {
-                    lua_pushinteger ( L, i );
-                    lua_gettable ( L, 1 );
+            // read table into vector
+            for ( int i = 1; i <= table_length; i++ ) {
+                lua_pushinteger ( L, i );
 
-                    if ( lua_istable ( L, -1 ) ) {
-                        logger->debug ( "table row of " + option + " is a table" );
-                        lua_pushnil ( L );
-                        lua_next ( L, -2 );
+                lua_gettable ( L, -2 );
 
-                        // TODO check values
-                        string key = lua_tostring ( L, -2 );
-                        int value  = lua_tointeger ( L, -1 );
+                if ( lua_istable ( L, -1 ) ) {
+                    logger->debug ( "table row of " + option + " is a table" );
+                    lua_pushnil ( L );
 
-                        table_map[key] = value;
+                    // get next row. push key and value on the stack
+                    lua_next ( L, -2 );
 
-                        lua_pop ( L, 3 );
-                    }
-                    else if ( lua_isstring ( L, -1 ) ) {
-                        logger->debug ( "table row of " + option + " is a string" );
-                        string table_row = lua_tostring ( L, -1 );
+                    int value = 0;
+                    string key = "";
 
-                        logger->debug ( "Loading table row value " + table_row + " into " + option );
+                    if ( lua_isnumber ( L, -1 ) )
+                        value  = lua_tointeger ( L, -1 );
 
-                        table_rows.push_back ( table_row );
-                        lua_pop ( L, 1 );
-                    }
+                    if ( lua_isstring ( L, -2 ) )
+                        key = lua_tostring ( L, -2 );
+
+                    table_map[key] = value;
+
+                    // pop key, value and subtable
+                    lua_pop ( L, 3 );
+                }
+                else if ( lua_isstring ( L, -1 ) ) {
+                    logger->debug ( "table row of " + option + " is a string" );
+                    string table_row = lua_tostring ( L, -1 );
+
+                    logger->debug ( "Loading table row value " + table_row + " into " + option );
+
+                    table_rows.push_back ( table_row );
+                    lua_pop ( L, 1 );
                 }
 
                 if ( !table_rows.empty() )
@@ -72,16 +90,9 @@ namespace Notifier {
                 if ( !table_map.empty() )
                     Config::values[option] = table_map;
             }
-            else if ( lua_isnil ( L, 1 ) ) {
-                if ( defaults.find ( option ) == defaults.end() ) {
-                    logger->crit ( option + " must be defined" );
-                    retval = false;
-                }
-                else {
-                    values[option] = defaults[option];
-                    logger->warn ( option + " not defined in config file, using default: " + get_value ( option ) );
-                }
-            }
+        }
+        else {
+            // TODO what else?
         }
 
         // pop last value to keep stack in clean state
