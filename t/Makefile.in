@@ -182,7 +182,7 @@ target_vendor = @target_vendor@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-tests_LDADD = -lgtest -llua -lboost_system
+tests_LDADD = -lgtest -llua -lboost_system-mt
 tests_SOURCES = tests.cpp ../src/Notifier/Config.cpp ../src/Notifier/Logger.cpp
 all: all-am
 
